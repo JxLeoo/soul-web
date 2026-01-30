@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { TestItem, Result, WeatherResult as IWeatherResult } from "@/lib/data";
 import TestEngine from "./TestEngine";
 import AccessGate from "./AccessGate";
@@ -19,7 +19,7 @@ export default function TestFlow({ test }: { test: TestItem }) {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [calculatedResult, setCalculatedResult] = useState<Result | null>(null);
 
-  const defaultTheme = {
+  const defaultTheme = useMemo(() => ({
     primaryColor: "bg-black dark:bg-white",
     secondaryColor: "bg-zinc-100 dark:bg-zinc-800",
     textColor: "text-zinc-900 dark:text-zinc-100",
@@ -30,13 +30,13 @@ export default function TestFlow({ test }: { test: TestItem }) {
     gateDesc: "请输入激活码以揭示结果",
     gateBtnText: "获取激活码",
     unlockBtnText: "解锁报告"
-  };
+  }), []);
 
   const theme = test.theme || defaultTheme;
 
-  const handleStart = () => setPhase("test");
+  const handleStart = useCallback(() => setPhase("test"), []);
   
-  const calculateResult = (finalAnswers: Record<number, string>) => {
+  const calculateResult = useCallback((finalAnswers: Record<number, string>) => {
     if (!test.questions || !test.results) return;
 
     // 通用计分逻辑：计算每个维度的加权总分
@@ -72,17 +72,18 @@ export default function TestFlow({ test }: { test: TestItem }) {
 
     const finalResult = test.results.find(r => r.id === resultType);
     setCalculatedResult(finalResult || test.results[0]);
-  };
+  }, [test.questions, test.results]);
 
-  const handleComplete = (finalAnswers: Record<number, string>) => {
+  const handleComplete = useCallback((finalAnswers: Record<number, string>) => {
     setAnswers(finalAnswers);
     calculateResult(finalAnswers);
+    // 使用 setTimeout 避免在渲染期间立即更新状态导致的问题
     setTimeout(() => setPhase("gate"), 500);
-  };
+  }, [calculateResult]);
 
-  const handleUnlock = () => {
+  const handleUnlock = useCallback(() => {
     setPhase("result");
-  };
+  }, []);
 
   return (
     <div className={cn("min-h-screen w-full transition-colors duration-500", theme.backgroundStyle)}>

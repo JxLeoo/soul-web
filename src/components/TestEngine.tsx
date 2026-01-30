@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Question } from "@/lib/data";
 import { logEvent } from "@/lib/analytics";
 import { TestTheme } from "@/lib/data";
@@ -24,24 +24,26 @@ export default function TestEngine({ questions, onComplete, theme }: TestEngineP
   const currentQuestion = questions[currentIndex];
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
-  const handleSelect = (value: string) => {
+  const handleSelect = useCallback((value: string) => {
     logEvent("select_option", {
       questionId: currentQuestion.id,
       selected: value,
       questionText: currentQuestion.text
     });
 
+    // 立即更新本地状态
     const newAnswers = { ...answers, [currentQuestion.id]: value };
     setAnswers(newAnswers);
 
     if (currentIndex < questions.length - 1) {
       setTimeout(() => {
-        setCurrentIndex(currentIndex + 1);
+        setCurrentIndex((prev) => prev + 1);
       }, 200);
     } else {
+      // 答题结束
       onComplete(newAnswers);
     }
-  };
+  }, [answers, currentQuestion, currentIndex, questions.length, onComplete]);
 
   return (
     <div className="w-full max-w-md flex flex-col gap-8 animate-in fade-in duration-500">
