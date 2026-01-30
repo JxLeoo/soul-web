@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# browser cache
+.browser_data/
+downloads/
+ffmpeg/
+ffmpeg.zip
+ffmpeg

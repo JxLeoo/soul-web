@@ -1,0 +1,16 @@
+{
+  "name": "Soul Flip - 念头翻转",
+  "short_name": "MindFlip",
+  "description": "Flip your negative thoughts instantly with AI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/globe.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
