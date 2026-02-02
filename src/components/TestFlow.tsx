@@ -9,6 +9,7 @@ import WeatherResult from "./WeatherResult"; // 导入新的结果组件
 import Link from "next/link";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { HistoryManager } from "@/lib/history";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -83,7 +84,20 @@ export default function TestFlow({ test }: { test: TestItem }) {
 
   const handleUnlock = useCallback(() => {
     setPhase("result");
-  }, []);
+    
+    // Save history when unlocked
+    if (calculatedResult) {
+      HistoryManager.add({
+        type: 'test',
+        title: test.title,
+        data: {
+          testId: test.id,
+          resultId: calculatedResult.id,
+          resultTitle: calculatedResult.title
+        }
+      });
+    }
+  }, [calculatedResult, test.title, test.id]);
 
   return (
     <div className={cn("min-h-screen w-full transition-colors duration-500", theme.backgroundStyle)}>

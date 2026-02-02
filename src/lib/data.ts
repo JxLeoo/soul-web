@@ -272,7 +272,7 @@ const weatherTest: TestItem = {
     },
     {
       id: "Cloudy",
-      title: "🌤 多云型",
+      title: "�� 多云型",
       description: "云有点多，但没下雨。",
       weatherNote: "云有点多，但没下雨。",
       quote: "多云中，但还在走。",
@@ -320,7 +320,7 @@ const weatherTest: TestItem = {
     },
     {
       id: "Foggy",
-      title: "�� 薄雾型",
+      title: " 薄雾型",
       description: "看不远，但不是坏天气。",
       weatherNote: "看不远，但不是坏天气。",
       quote: "不是迷路，是起雾了。",
@@ -371,6 +371,28 @@ const weatherTest: TestItem = {
 
 export const tests: TestItem[] = [
   {
+    id: "mind-flip",
+    title: "念头翻转 · 烦恼粉碎机",
+    description: "输入你的烦恼，帮你一键反转。把焦虑变成行动力，瞬间清醒。",
+    icon: "☀️",
+    tags: ["NEW", "工具"],
+    stats: "∞人已翻转",
+    isHot: true,
+    customUrl: "/flip",
+    theme: {
+      primaryColor: "bg-blue-600",
+      secondaryColor: "bg-blue-900",
+      textColor: "text-blue-50",
+      buttonStyle: "rounded-xl font-bold bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-500/20",
+      backgroundStyle: "bg-slate-900 text-white",
+      startBtnText: "启动粉碎机",
+      gateTitle: "反转能量已就绪",
+      gateDesc: "输入激活密钥以接收新的思维模式",
+      gateBtnText: "获取密钥 🔑",
+      unlockBtnText: "立即反转"
+    }
+  },
+  {
     id: "scent-personality",
     title: "香味人格测试 Lite",
     description: "如果你的灵魂有气味，它是凛冽刺骨的雪松，还是温热暧昧的麝香？",
@@ -405,7 +427,6 @@ export const tests: TestItem[] = [
           { label: "待在家，把生活整理好", value: "S", weight: 2 },
         ],
       },
-      // ... 其他题目省略，保持原样 ...
       {
         id: 2,
         text: "走进一家陌生的店，你通常会？",
@@ -565,7 +586,7 @@ export const tests: TestItem[] = [
       },
       {
         id: "O",
-        title: "海盐型人格 ��",
+        title: "海盐型人格 ",
         description: "你对世界始终保留好奇心。",
         traits: ["自由", "边界感", "探索"],
         scentNote: "海盐 / 矿物感 / 冷感气息",
@@ -580,7 +601,7 @@ export const tests: TestItem[] = [
       },
       {
         id: "A",
-        title: "白茶型人格 🌿",
+        title: "白茶型人格 ��",
         description: "你不是存在感最强的那种，但很容易让人安心。",
         traits: ["治愈", "包容", "余温"],
         scentNote: "白茶 / 轻花香 / 干净麝香",
@@ -595,7 +616,7 @@ export const tests: TestItem[] = [
       },
       {
         id: "S",
-        title: "乌木型人格 ��",
+        title: "乌木型人格 ",
         description: "你不张扬，但很有存在感。",
         traits: ["沉稳", "支撑", "底蕴"],
         scentNote: "木质 / 树脂 / 烟熏",
@@ -609,28 +630,6 @@ export const tests: TestItem[] = [
         }
       },
     ],
-  },
-  {
-    id: "mind-flip",
-    title: "念头翻转 · 烦恼粉碎机",
-    description: "输入你的烦恼，帮你一键反转。把焦虑变成行动力，瞬间清醒。",
-    icon: "🧠",
-    tags: ["NEW", "工具"],
-    stats: "∞人已翻转",
-    isHot: true,
-    customUrl: "/flip",
-    theme: {
-      primaryColor: "bg-blue-600",
-      secondaryColor: "bg-blue-900",
-      textColor: "text-blue-50",
-      buttonStyle: "rounded-xl font-bold bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-500/20",
-      backgroundStyle: "bg-slate-900 text-white",
-      startBtnText: "启动粉碎机",
-      gateTitle: "反转能量已就绪",
-      gateDesc: "输入激活密钥以接收新的思维模式",
-      gateBtnText: "获取密钥 🔑",
-      unlockBtnText: "立即反转"
-    }
   },
   // 插入天气测试到第三位
   weatherTest,
@@ -651,7 +650,7 @@ export const tests: TestItem[] = [
       startBtnText: "潜入潜意识",
       gateTitle: "精神拓扑已解析",
       gateDesc: "输入通行证以查看完整人格报告",
-      gateBtnText: "获取通行证 ��",
+      gateBtnText: "获取通行证 ",
       unlockBtnText: "揭示真我"
     },
     questions: [

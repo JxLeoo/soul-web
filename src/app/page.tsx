@@ -2,11 +2,27 @@
 
 import Link from "next/link";
 import { tests } from "@/lib/data";
+import { useState } from "react";
+import HistoryViewer from "@/components/HistoryViewer";
 
 export default function Home() {
+  const [showHistory, setShowHistory] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#050505] text-zinc-100 selection:bg-cyan-500 selection:text-black font-sans relative overflow-x-hidden">
       
+      {/* History Drawer */}
+      {showHistory && <HistoryViewer onClose={() => setShowHistory(false)} />}
+
+      {/* History Button */}
+      <button 
+        onClick={() => setShowHistory(true)}
+        className="fixed top-6 right-6 z-50 p-2 bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors group"
+        title="My History"
+      >
+        <span className="text-xl group-hover:scale-110 transition-transform block">📜</span>
+      </button>
+
       {/* 增强版背景光效 (常驻色彩) */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-20%] w-[80%] h-[60%] bg-purple-600/20 blur-[100px] rounded-full mix-blend-screen animate-pulse-slow" />
