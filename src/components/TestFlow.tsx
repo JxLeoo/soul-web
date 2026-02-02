@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { TestItem, Result, WeatherResult as IWeatherResult } from "@/lib/data";
+import { TestItem, Result, WeatherResult as IWeatherResult, CityResult as ICityResult } from "@/lib/data";
 import TestEngine from "./TestEngine";
 import AccessGate from "./AccessGate";
 import ScentResult from "./ScentResult";
-import WeatherResult from "./WeatherResult"; // 导入新的结果组件
+import WeatherResult from "./WeatherResult";
+import CityResult from "./CityResult"; // 导入新的结果组件
 import Link from "next/link";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -151,6 +152,8 @@ export default function TestFlow({ test }: { test: TestItem }) {
             <ScentResult result={calculatedResult} />
           ) : test.id === "weather-mood" ? (
             <WeatherResult result={calculatedResult as IWeatherResult} />
+          ) : test.id === "city-match" ? (
+            <CityResult result={calculatedResult as ICityResult} />
           ) : (
             // 默认通用结果页
             <div className="flex flex-col items-center gap-6 text-center animate-in zoom-in duration-500">

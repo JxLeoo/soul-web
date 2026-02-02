@@ -1,3 +1,4 @@
+
 export interface Option {
   label: string;
   value: string;
@@ -26,6 +27,15 @@ export interface WeatherDimension {
   need: string;
 }
 
+// 城市匹配度测试定义
+export interface CityResultDimension {
+  cityTemperament: string; // 城市气质
+  lifePace: string;        // 生活节奏
+  workStyle: string;       // 工作属性
+  socialStyle: string;     // 社交关系
+  emotionalExp: string;    // 情绪体验
+}
+
 // 修改 Result 接口，使其包含所有可能的字段（作为可选）
 export interface Result {
   id: string;
@@ -39,6 +49,9 @@ export interface Result {
   weatherNote?: string;
   quote?: string;
   weatherDimensions?: WeatherDimension;
+  // 城市测试扩展字段
+  cityDimensions?: CityResultDimension;
+  fitFor?: string[];       // 更适合你，如果你...
 }
 
 export interface TestTheme {
@@ -60,6 +73,11 @@ export interface WeatherResult extends Result {
   weatherNote: string;
   quote: string;
   weatherDimensions: WeatherDimension;
+}
+
+export interface CityResult extends Result {
+  cityDimensions?: CityResultDimension;
+  fitFor?: string[];       // 更适合你，如果你...
 }
 
 export interface TestItem {
@@ -272,7 +290,7 @@ const weatherTest: TestItem = {
     },
     {
       id: "Cloudy",
-      title: "�� 多云型",
+      title: "☁️ 多云型",
       description: "云有点多，但没下雨。",
       weatherNote: "云有点多，但没下雨。",
       quote: "多云中，但还在走。",
@@ -320,7 +338,7 @@ const weatherTest: TestItem = {
     },
     {
       id: "Foggy",
-      title: " 薄雾型",
+      title: "�� 薄雾型",
       description: "看不远，但不是坏天气。",
       weatherNote: "看不远，但不是坏天气。",
       quote: "不是迷路，是起雾了。",
@@ -367,6 +385,354 @@ const weatherTest: TestItem = {
       }
     },
   ],
+};
+
+const cityTest: TestItem = {
+  id: "city-match",
+  title: "中国城市匹配度测试",
+  description: "你最适合生活的中国城市是哪一座？不评判好坏，只讨论是否适合。",
+  icon: "🏙️",
+  tags: ["HOT", "生活", "城市"],
+  stats: "5.2w人已匹配",
+  isHot: true,
+  productUrl: "https://www.xiaohongshu.com/user/profile/5b6a7b88e8ac2b00016a2b88", // 替换为实际的小红书链接
+  
+  theme: {
+    primaryColor: "bg-indigo-600",
+    secondaryColor: "bg-indigo-50 dark:bg-indigo-900/20",
+    textColor: "text-indigo-900 dark:text-indigo-100",
+    buttonStyle: "rounded-lg font-bold bg-indigo-600 text-white shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 transition-all active:scale-95",
+    backgroundStyle: "bg-gradient-to-br from-slate-50 to-indigo-50 dark:from-slate-900 dark:to-indigo-950",
+    startBtnText: "寻找我的本命城市",
+    gateTitle: "城市匹配分析完成",
+    gateDesc: "输入通行码以获取城市报告",
+    gateBtnText: "获取通行码 🎫",
+    unlockBtnText: "揭晓结果"
+  },
+
+  questions: [
+    {
+      id: 1,
+      text: "理想的一天节奏更接近？",
+      options: [
+        { label: "明确计划，高效推进", value: "Beijing", weight: 1 }, // 北京/上海/深圳
+        { label: "有安排，但可调整", value: "Hangzhou", weight: 1 },  // 杭州/南京/苏州
+        { label: "不赶时间，随走随停", value: "Chengdu", weight: 1 }, // 成都/重庆/广州
+        { label: "越热闹越有劲", value: "Changsha", weight: 1 },      // 长沙/武汉
+      ]
+    },
+    {
+      id: 2,
+      text: "你对“卷”的真实态度是？",
+      options: [
+        { label: "接受，资源就在那里", value: "Beijing", weight: 1 },
+        { label: "适度就好", value: "Hangzhou", weight: 1 },
+        { label: "能不卷就不卷", value: "Chengdu", weight: 1 },
+        { label: "不如痛快点活", value: "Changsha", weight: 1 },
+      ]
+    },
+    {
+      id: 3,
+      text: "你更看重一座城市的？",
+      options: [
+        { label: "平台和上限", value: "Shanghai", weight: 1 },
+        { label: "秩序与专业", value: "Suzhou", weight: 1 },
+        { label: "生活舒服度", value: "Guangzhou", weight: 1 },
+        { label: "情绪与氛围", value: "Chongqing", weight: 1 },
+      ]
+    },
+    {
+      id: 4,
+      text: "周末你更可能？",
+      options: [
+        { label: "学习 / 工作相关", value: "Shenzhen", weight: 1 },
+        { label: "精致休闲", value: "Shanghai", weight: 1 },
+        { label: "朋友聚会 / 吃喝", value: "Guangzhou", weight: 1 },
+        { label: "夜生活 / 临时起意", value: "Changsha", weight: 1 },
+      ]
+    },
+    {
+      id: 5,
+      text: "你对房子和生活空间的态度？",
+      options: [
+        { label: "是资产，也是安全感", value: "Shanghai", weight: 1 },
+        { label: "要有品质", value: "Hangzhou", weight: 1 },
+        { label: "能住就行", value: "Shenzhen", weight: 1 },
+        { label: "不重要，活得爽更重要", value: "Chongqing", weight: 1 },
+      ]
+    },
+    {
+      id: 6,
+      text: "你更适合哪种人群密度？",
+      options: [
+        { label: "强者很多的地方", value: "Beijing", weight: 1 },
+        { label: "各自有边界", value: "Shanghai", weight: 1 },
+        { label: "熟人社会一点", value: "Xian", weight: 1 },
+        { label: "热闹、有人气", value: "Wuhan", weight: 1 },
+      ]
+    },
+    {
+      id: 7,
+      text: "你对陌生人的态度？",
+      options: [
+        { label: "先判断是否有用", value: "Shenzhen", weight: 1 },
+        { label: "保持礼貌距离", value: "Shanghai", weight: 1 },
+        { label: "随意、好说话", value: "Chengdu", weight: 1 },
+        { label: "很容易聊起来", value: "Wuhan", weight: 1 },
+      ]
+    },
+    {
+      id: 8,
+      text: "你更能忍受？",
+      options: [
+        { label: "压力", value: "Beijing", weight: 1 },
+        { label: "冷漠", value: "Shanghai", weight: 1 },
+        { label: "平庸", value: "Nanjing", weight: 1 },
+        { label: "无聊", value: "Changsha", weight: 1 },
+      ]
+    },
+    {
+      id: 9,
+      text: "你更想要的安全感来自？",
+      options: [
+        { label: "资源和规则", value: "Beijing", weight: 1 },
+        { label: "秩序和边界", value: "Shanghai", weight: 1 },
+        { label: "熟悉感", value: "Xian", weight: 1 },
+        { label: "情绪连接", value: "Chengdu", weight: 1 },
+      ]
+    },
+    {
+      id: 10,
+      text: "如果工作不顺，你更可能？",
+      options: [
+        { label: "咬牙换赛道", value: "Shenzhen", weight: 1 },
+        { label: "调整节奏", value: "Hangzhou", weight: 1 },
+        { label: "先照顾好生活", value: "Guangzhou", weight: 1 },
+        { label: "找朋友发泄", value: "Chongqing", weight: 1 },
+      ]
+    },
+    // ... Q11-Q20 (简化版，实际开发时补全30题)
+    {
+      id: 11,
+      text: "你更喜欢的城市气质是？",
+      options: [
+        { label: "强大", value: "Beijing", weight: 1 },
+        { label: "干净", value: "Shanghai", weight: 1 },
+        { label: "真实", value: "Wuhan", weight: 1 },
+        { label: "热烈", value: "Chongqing", weight: 1 },
+      ]
+    },
+    {
+      id: 12,
+      text: "你对“历史感”的态度？",
+      options: [
+        { label: "实用优先", value: "Shenzhen", weight: 1 },
+        { label: "当作背景", value: "Nanjing", weight: 1 },
+        { label: "有就挺好", value: "Hangzhou", weight: 1 },
+        { label: "很重要", value: "Xian", weight: 1 },
+      ]
+    },
+    {
+      id: 13,
+      text: "你更容易被哪种生活打动？",
+      options: [
+        { label: "大项目、大平台", value: "Beijing", weight: 1 },
+        { label: "高质量日常", value: "Suzhou", weight: 1 },
+        { label: "烟火气", value: "Guangzhou", weight: 1 },
+        { label: "情绪释放", value: "Changsha", weight: 1 },
+      ]
+    },
+    {
+      id: 14,
+      text: "你对社交的真实需求是？",
+      options: [
+        { label: "有价值连接", value: "Shenzhen", weight: 1 },
+        { label: "低频高质量", value: "Shanghai", weight: 1 },
+        { label: "熟人稳定", value: "Nanjing", weight: 1 },
+        { label: "多、热闹", value: "Chengdu", weight: 1 },
+      ]
+    },
+    {
+      id: 15,
+      text: "你更像哪种人？",
+      options: [
+        { label: "长线规划型", value: "Beijing", weight: 1 },
+        { label: "自律边界型", value: "Shanghai", weight: 1 },
+        { label: "随遇而安型", value: "Guangzhou", weight: 1 },
+        { label: "情绪驱动型", value: "Chongqing", weight: 1 },
+      ]
+    },
+    // ... 为了演示完整流程，这里先只列出部分题目，实际应完整录入30题
+    // 省略中间题目以避免过长，逻辑一致
+    {
+      id: 30,
+      text: "如果只能选一句？",
+      options: [
+        { label: "我想往上走", value: "Beijing", weight: 2 },
+        { label: "我想过得体面", value: "Shanghai", weight: 2 },
+        { label: "我想活得轻松", value: "Chengdu", weight: 2 },
+        { label: "我想活得痛快", value: "Chongqing", weight: 2 },
+      ]
+    }
+  ],
+  results: [
+    {
+      id: "Beijing",
+      title: "北京｜资源密度型城市",
+      description: "你适合这里，如果你能承压换资源，看重长期上限。",
+      cityDimensions: {
+        cityTemperament: "规则 > 情绪：以规则、体系和资源密度运转，不擅长照顾情绪，但路径清晰。",
+        lifePace: "阶段性高压：呈现“冲刺—缓冲”的节奏，更适合能承受周期性压力的人。",
+        workStyle: "长线回报：资源集中、上限高，适合延迟满足型发展。",
+        socialStyle: "功能型连接：关系多由目标和事务建立，清晰但不温情。",
+        emotionalExp: "容易紧绷：对情绪敏感者消耗感明显。"
+      },
+      fitFor: ["能承压换资源", "看重长期上限", "不依赖情绪环境"]
+    },
+    {
+      id: "Shanghai",
+      title: "上海｜秩序与边界型城市",
+      description: "你适合这里，如果你重视边界，讨厌混乱，对生活品质敏感。",
+      cityDimensions: {
+        cityTemperament: "体面、专业、克制：强调边界、规则和“合不合适”。",
+        lifePace: "稳定可控：不慢，但很少混乱。",
+        workStyle: "专业优先：重视能力、可靠度和长期表现。",
+        socialStyle: "低频高质量：关系不密集，但稳定清晰。",
+        emotionalExp: "安全但偏冷：舒适、不冒犯，但情绪连接感较弱。"
+      },
+      fitFor: ["重视边界", "讨厌混乱", "对生活品质敏感"]
+    },
+    {
+      id: "Shenzhen",
+      title: "深圳｜速度与试错型城市",
+      description: "你适合这里，如果你接受不确定性，行动大于情绪。",
+      cityDimensions: {
+        cityTemperament: "年轻、直接、结果导向：不问背景，看你能做到什么。",
+        lifePace: "持续高速：变化快，城市整体在向前跑。",
+        workStyle: "效率与试错：容错高，但节奏快。",
+        socialStyle: "项目型连接：关系建立快，消散也快。",
+        emotionalExp: "兴奋但不稳定：容易被推动，也容易疲惫。"
+      },
+      fitFor: ["接受不确定性", "行动大于情绪"]
+    },
+    {
+      id: "Guangzhou",
+      title: "广州｜松弛实用型城市",
+      description: "你适合这里，如果你重视生活本身，不想被野心裹挟。",
+      cityDimensions: {
+        cityTemperament: "务实、不紧绷：强调日子怎么过，而不是如何成功。",
+        lifePace: "工作生活分离：下班后是真生活。",
+        workStyle: "实用导向：不迷信头衔，重实际价值。",
+        socialStyle: "自然随和：关系不端着，靠相处。",
+        emotionalExp: "松弛感强：不容易被城市推着焦虑。"
+      },
+      fitFor: ["重视生活本身", "不想被野心裹挟"]
+    },
+    {
+      id: "Chengdu",
+      title: "成都｜生活感与情绪缓冲型城市",
+      description: "你适合这里，如果你容易被压力影响，重视情绪稳定。",
+      cityDimensions: {
+        cityTemperament: "松弛、有温度：强调生活体验和情绪感受。",
+        lifePace: "慢但不消极：不给自己过度压力。",
+        workStyle: "稳定优先：不追极端效率。",
+        socialStyle: "情绪连接：关系建立在陪伴与感受上。",
+        emotionalExp: "被接住：对情绪非常友好。"
+      },
+      fitFor: ["容易被压力影响", "重视情绪稳定"]
+    },
+    {
+      id: "Hangzhou",
+      title: "杭州｜平衡与宜居型城市",
+      description: "你适合这里，如果你追求平衡，不想走极端路线。",
+      cityDimensions: {
+        cityTemperament: "克制的上进：既有机会，也留生活。",
+        lifePace: "张弛有度：适合长期发展。",
+        workStyle: "平台 + 宜居：适合想前进但不极端的人。",
+        socialStyle: "温和理性：不密集，也不冷漠。",
+        emotionalExp: "稳定不过载：情绪波动小。"
+      },
+      fitFor: ["追求平衡", "不想走极端路线"]
+    },
+    {
+      id: "Nanjing",
+      title: "南京｜稳态发展型城市",
+      description: "你适合这里，如果你不爱折腾，重视长期安全感。",
+      cityDimensions: {
+        cityTemperament: "中庸、克制：不追风口，也不激进。",
+        lifePace: "长期稳定：适合慢慢扎根。",
+        workStyle: "耐心型发展：强调积累而非爆发。",
+        socialStyle: "熟人稳定：不热闹，但可靠。",
+        emotionalExp: "心态平衡：不容易被外界拉扯。"
+      },
+      fitFor: ["不爱折腾", "重视长期安全感"]
+    },
+    {
+      id: "Wuhan",
+      title: "武汉｜真实与烟火型城市",
+      description: "你适合这里，如果你喜欢真实环境，不擅长精致社交。",
+      cityDimensions: {
+        cityTemperament: "真实、不端着：有情绪，但不矫饰。",
+        lifePace: "有快有慢：不精致，但很生活。",
+        workStyle: "接地气：机会多样，不包装。",
+        socialStyle: "容易融入：人情味浓。",
+        emotionalExp: "情绪浓度高：直接、不压抑。"
+      },
+      fitFor: ["喜欢真实环境", "不擅长精致社交"]
+    },
+    {
+      id: "Xian",
+      title: "西安｜底蕴与耐心型城市",
+      description: "你适合这里，如果你有耐心，不追即时反馈。",
+      cityDimensions: {
+        cityTemperament: "厚重、时间感强：强调积累而非速度。",
+        lifePace: "偏慢：适合沉下心生活。",
+        workStyle: "稳定导向：不追新，但稳。",
+        socialStyle: "熟人逻辑：建立慢，但持久。",
+        emotionalExp: "踏实：不浮躁。"
+      },
+      fitFor: ["有耐心", "不追即时反馈"]
+    },
+    {
+      id: "Chongqing",
+      title: "重庆｜情绪释放型城市",
+      description: "你适合这里，如果你情绪浓度高，不喜欢压抑。",
+      cityDimensions: {
+        cityTemperament: "热烈、江湖感：情绪浓度高。",
+        lifePace: "白天工作，晚上生活：夜晚很重要。",
+        workStyle: "现实直接：不太讲包装。",
+        socialStyle: "高密度：人情味重。",
+        emotionalExp: "释放感强：适合需要出口的人。"
+      },
+      fitFor: ["情绪浓度高", "不喜欢压抑"]
+    },
+    {
+      id: "Suzhou",
+      title: "苏州｜低调高质量型城市",
+      description: "你适合这里，如果你喜欢安稳，不追求刺激。",
+      cityDimensions: {
+        cityTemperament: "安静、稳定：不张扬，但很稳。",
+        lifePace: "规律：边界清晰。",
+        workStyle: "稳定优先：适合长期定居。",
+        socialStyle: "少而稳：不热闹，但可靠。",
+        emotionalExp: "低波动：不容易焦虑。"
+      },
+      fitFor: ["喜欢安稳", "不追求刺激"]
+    },
+    {
+      id: "Changsha",
+      title: "长沙｜快乐与年轻型城市",
+      description: "你适合这里，如果你重视当下快乐，不想活得太紧。",
+      cityDimensions: {
+        cityTemperament: "情绪友好：快乐优先。",
+        lifePace: "轻松、偏夜生活：不急着成功。",
+        workStyle: "灵活：路径不唯一。",
+        socialStyle: "热闹、易连接：社交成本低。",
+        emotionalExp: "高情绪价值：开心很重要。"
+      },
+      fitFor: ["重视当下快乐", "不想活得太紧"]
+    }
+  ]
 };
 
 export const tests: TestItem[] = [
@@ -601,7 +967,7 @@ export const tests: TestItem[] = [
       },
       {
         id: "A",
-        title: "白茶型人格 ��",
+        title: "白茶型人格 ",
         description: "你不是存在感最强的那种，但很容易让人安心。",
         traits: ["治愈", "包容", "余温"],
         scentNote: "白茶 / 轻花香 / 干净麝香",
@@ -633,6 +999,8 @@ export const tests: TestItem[] = [
   },
   // 插入天气测试到第三位
   weatherTest,
+  // 插入城市匹配测试
+  cityTest,
   {
     id: "mbti-pro",
     title: "MBTI 灵知全境",
@@ -712,14 +1080,5 @@ export const tests: TestItem[] = [
     icon: "🐾",
     tags: ["Psychology", "趣味"],
     stats: "32,841人已观测",
-  },
-  {
-    id: "ex-files",
-    title: "前任侧写",
-    description: "揭开Ta的伪装 x 焚毁记忆仪式。毒性检测，立即复仇。",
-    icon: "🥀",
-    tags: ["HOT", "情感"],
-    stats: "288人正在测",
-    isHot: true,
   },
 ];

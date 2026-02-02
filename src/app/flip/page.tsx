@@ -83,7 +83,7 @@ export default function FlipPage() {
                 : 'bg-black dark:bg-white text-white dark:text-black hover:opacity-90 disabled:opacity-50'
             }`}
           >
-            {loading ? 'Flipping...' : result ? 'Flip Another Thought ✨' : 'Flip Thought ⚡️'}
+            {loading ? '翻转中...' : result ? '再翻转一个 ✨' : '开始翻转！'}
           </button>
 
           {(result || loading) && (

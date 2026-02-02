@@ -52,10 +52,10 @@ export default function AccessGate({ onUnlock, productUrl, theme }: AccessGatePr
             className={cn(
               "w-full p-4 text-center text-lg tracking-[0.5em] font-mono border rounded-lg outline-none transition-all duration-300",
               theme.textColor,
-              "bg-transparent focus:ring-2",
+              "bg-transparent focus:ring-2 placeholder:opacity-50",
               error 
                 ? "border-red-500 text-red-500 bg-red-50 dark:bg-red-900/20" 
-                : cn("border-current opacity-60 focus:opacity-100", theme.primaryColor.replace("bg-", "ring-")) // 动态 focus ring
+                : cn("border-zinc-300 dark:border-zinc-700 opacity-80 focus:opacity-100", theme.primaryColor.replace("bg-", "ring-")) // 动态 focus ring
             , shake && "animate-shake")}
           />
           {error && (
